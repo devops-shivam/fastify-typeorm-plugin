@@ -83,6 +83,7 @@ const root = async (fastify, opts) => {
     const userRepository = fastify.orm.getRepository(Users);
   });
 };
+```
 
 ### TypeScript
 
