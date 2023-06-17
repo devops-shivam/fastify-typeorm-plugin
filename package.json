@@ -7,6 +7,11 @@
   "scripts": {
     "build": "tsc -p tsconfig.json"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/devops-shivam/fastify-typeorm-plugin.git"
+  },
+  "homepage": "https://github.com/devops-shivam/fastify-typeorm-plugin.git#readme",
   "author": "Devops Shivam",
   "license": "MIT",
   "dependencies": {
