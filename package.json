@@ -1,0 +1,28 @@
+{
+  "name": "fastify-plugin-typeorm",
+  "version": "1.0.0",
+  "description": "Fastify Plugin for TypeORM",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "author": "Devops Shivam",
+  "license": "MIT",
+  "dependencies": {
+    "fastify-plugin": "^3.0.1",
+    "typeorm": "^0.3.16"
+  },
+  "keywords": [
+    "fastify",
+    "typeorm",
+    "fastify-typeorm",
+    "plugin"
+  ],
+  "devDependencies": {
+    "@types/node": "^20.3.1",
+    "fastify": "^3.29.5",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.3"
+  }
+}
