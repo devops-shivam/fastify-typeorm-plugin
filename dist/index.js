@@ -36,16 +36,16 @@ const typeOrmConnector = (fastify, options) => __awaiter(void 0, void 0, void 0,
         }
         else {
             fastify.orm[namespace] = connection;
-            yield fastify.orm[namespace].initialize();
-            fastify.addHook("onClose", (fastifyInstance, done) => __awaiter(void 0, void 0, void 0, function* () {
-                yield fastifyInstance.orm[namespace].destroy();
-                done();
-            }));
-            return Promise.resolve();
+            yield fastify.orm[namespace].initialize().then(() => {
+                fastify.addHook("onClose", (fastifyInstance, done) => __awaiter(void 0, void 0, void 0, function* () {
+                    yield fastifyInstance.orm[namespace].destroy();
+                    done();
+                }));
+                return Promise.resolve();
+            });
         }
     }
-    yield connection.initialize();
-    fastify.decorate("orm", connection);
+    fastify.decorate("orm", yield connection.initialize());
     fastify.addHook("onClose", (fastifyInstance, done) => __awaiter(void 0, void 0, void 0, function* () {
         yield fastifyInstance.orm.destroy();
         done();
@@ -56,3 +56,4 @@ exports.default = (0, fastify_plugin_1.default)(typeOrmConnector, {
     fastify: "3.x",
     name: "@fastify-typeorm",
 });
+//# sourceMappingURL=index.js.map
