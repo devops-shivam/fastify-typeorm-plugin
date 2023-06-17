@@ -27,13 +27,12 @@ const typeOrmConnector: FastifyPluginAsync<DBConfigOptions> = async (
   const { namespace } = options;
   delete options.namespace;
   let connection: DataSource;
-  
+
   if (options.connection) {
     connection = options.connection;
-  } else if(Object.keys(options).length) {
+  } else if (Object.keys(options).length) {
     connection = new DataSource(options as DataSourceOptions);
-  }
-  else{
+  } else {
     throw new Error(`No valid DataSourceOPtions provided to the plugin`);
   }
 
@@ -49,20 +48,20 @@ const typeOrmConnector: FastifyPluginAsync<DBConfigOptions> = async (
       throw new Error(`This namespace has already been declared: ${namespace}`);
     } else {
       fastify.orm[namespace] = connection;
-      await fastify.orm[namespace].initialize();
-      fastify.addHook("onClose", async (fastifyInstance, done) => {
-        await fastifyInstance.orm[namespace].destroy();
-        done();
-      });
+      await fastify.orm[namespace].initialize().then(() => {
+        fastify.addHook("onClose", async (fastifyInstance, done) => {
+          await fastifyInstance.orm[namespace].destroy();
+          done();
+        });
 
-      return Promise.resolve();
+        return Promise.resolve();
+      });
     }
   }
 
   // Else no namespace is provided, initialize the connection directly on orm
 
-  await connection.initialize();
-  fastify.decorate("orm", connection);
+  fastify.decorate("orm", await connection.initialize());
   fastify.addHook("onClose", async (fastifyInstance, done) => {
     await fastifyInstance.orm.destroy();
     done();
