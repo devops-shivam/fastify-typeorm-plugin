@@ -75,6 +75,15 @@ app.listen(3000, (err, address) => {
 });
 ```
 
+routes.js
+
+```javascript
+const root = async (fastify, opts) => {
+  fastify.get('/', async function (request, reply) {
+    const userRepository = fastify.orm.getRepository(Users);
+  });
+};
+
 ### TypeScript
 
 ```typescript
@@ -112,7 +121,6 @@ app.listen(3000, (err, address) => {
   console.log(`Server listening on ${address}`);
 });
 ```
-Sure! Here are the additional code examples as per your request:
 
 ### Using Namespace Option in Configuration
 
