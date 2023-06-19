@@ -36,13 +36,12 @@ const typeOrmConnector = (fastify, options) => __awaiter(void 0, void 0, void 0,
         }
         else {
             fastify.orm[namespace] = connection;
-            yield fastify.orm[namespace].initialize().then(() => {
-                fastify.addHook("onClose", (fastifyInstance, done) => __awaiter(void 0, void 0, void 0, function* () {
-                    yield fastifyInstance.orm[namespace].destroy();
-                    done();
-                }));
-                return Promise.resolve();
-            });
+            yield fastify.orm[namespace].initialize();
+            fastify.addHook("onClose", (fastifyInstance, done) => __awaiter(void 0, void 0, void 0, function* () {
+                yield fastifyInstance.orm[namespace].destroy();
+                done();
+            }));
+            return Promise.resolve();
         }
     }
     fastify.decorate("orm", yield connection.initialize());

@@ -120,37 +120,6 @@ app.listen(3000, (err, address) => {
 });
 ```
 
-### Using Namespace Option in Configuration
-
-```javascript
-const fastify = require('fastify');
-const fastifyPluginTypeORM = require('fastify-plugin-typeorm');
-
-const app = fastify();
-
-// Register the plugin
-app.register(fastifyPluginTypeORM, {
-  // Provide your TypeORM configuration options
-  // See TypeORM documentation for details: https://typeorm.io/data-source-options
-  namespace: 'your_namespace',
-  type: 'mysql',
-  host: 'localhost',
-  port: 3306,
-  username: 'your_username',
-  password: 'your_password',
-  database: 'your_database',
-});
-
-// Start your application
-app.listen(3000, (err, address) => {
-  if (err) {
-    console.error(err);
-    process.exit(1);
-  }
-  console.log(`Server listening on ${address}`);
-});
-```
-
 ### Using an Existing Connection in Configuration
 
 ```javascript
@@ -184,6 +153,37 @@ app.listen(3000, (err, address) => {
   console.log(`Server listening on ${address}`);
 });
 ```
+### Using Namespace Option in Configuration
+
+```javascript
+const fastify = require('fastify');
+const fastifyPluginTypeORM = require('fastify-plugin-typeorm');
+
+const app = fastify();
+
+// Register the plugin
+app.register(fastifyPluginTypeORM, {
+  // Provide your TypeORM configuration options
+  // See TypeORM documentation for details: https://typeorm.io/data-source-options
+  namespace: 'your_namespace',
+  type: 'mysql',
+  host: 'localhost',
+  port: 3306,
+  username: 'your_username',
+  password: 'your_password',
+  database: 'your_database',
+});
+
+// Start your application
+app.listen(3000, (err, address) => {
+  if (err) {
+    console.error(err);
+    process.exit(1);
+  }
+  console.log(`Server listening on ${address}`);
+});
+```
+
 This is the only way to initialize a "namespaced" instance using this plugin.
 
 The namespace will be available everywhere your fastify server is. For example, to access the namespace declared in the above code: fastify.orm['postgres1'].getRepository()

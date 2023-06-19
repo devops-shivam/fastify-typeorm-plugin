@@ -48,14 +48,14 @@ const typeOrmConnector: FastifyPluginAsync<DBConfigOptions> = async (
       throw new Error(`This namespace has already been declared: ${namespace}`);
     } else {
       fastify.orm[namespace] = connection;
-      await fastify.orm[namespace].initialize().then(() => {
-        fastify.addHook("onClose", async (fastifyInstance, done) => {
-          await fastifyInstance.orm[namespace].destroy();
-          done();
-        });
-
-        return Promise.resolve();
+      await fastify.orm[namespace].initialize()
+      fastify.addHook("onClose", async (fastifyInstance, done) => {
+        await fastifyInstance.orm[namespace].destroy();
+        done();
       });
+
+      return Promise.resolve();
+      
     }
   }
 
